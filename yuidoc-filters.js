@@ -64,6 +64,6 @@ module.exports = function (data, options) {
 
   data.classes = gatherClassesToDocument(data, options);
 
-  updateClassReferencesInNamespaces(data, classNamesToDocument);
+  updateClassReferencesInNamespaces(data);
 
 }
