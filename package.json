@@ -1,0 +1,21 @@
+{
+  "name": "ember-yuidoc-filters",
+  "version": "0.0.1",
+  "description": "A YUIDoc preprocessor for filter out documentation based on accessor",
+  "main": "ember-yuidoc-filters.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toddjordan/ember-yuidoc-filters.git"
+  },
+  "author": "Todd Jordan <todd.jordan@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/toddjordan/ember-yuidoc-filters",
+  "bugs": {
+    "url": "https://github.com/toddjordan/ember-yuidoc-filters/issues"
+  },
+  "keywords": [
+    "ember",
+    "yuidoc"
+  ]
+
+}
