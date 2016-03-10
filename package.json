@@ -1,6 +1,5 @@
 {
   "name": "ember-yuidoc-filters",
-  "version": "0.0.1",
   "description": "A YUIDoc preprocessor for filter out documentation based on accessor",
   "main": "ember-yuidoc-filters.js",
   "repository": {
