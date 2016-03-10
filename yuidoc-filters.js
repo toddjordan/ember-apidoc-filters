@@ -8,8 +8,8 @@ function isDeprecatedClass(item) {
 };
 
 function isClassToBeIncluded(item, options) {
-  if (options["yuidoc-exclude"]) {
-    var accessors = options['yuidoc-exclude'];
+  if (options["yuidoc-filters-exclude"]) {
+    var accessors = options['yuidoc-filters-exclude'];
     for (var i = 0; i < accessors.length; i++) {
       if ((accessors[i] === 'private' && isPrivateClass(item)) ||
           (accessors[i] === 'deprecated' && isDeprecatedClass(item))) {
@@ -55,12 +55,12 @@ function updateClassReferencesInNamespaces(data) {
 };
 
 module.exports = function (data, options) {
-  if (!options["yuidoc-exclude"]) {
-    console.log('no yuidoc-exclude specified in yuidoc.json.  Skipping filters.')
+  if (!options["yuidoc-filters-exclude"]) {
+    console.log('no yuidoc-filters-exclude specified in yuidoc.json.  Skipping filters.')
     return;
   }
 
-  console.log("Excluding yuidoc for classes with: " + options["yuidoc-exclude"]);
+  console.log("Excluding yuidoc for classes with: " + options["yuidoc-filters-exclude"]);
 
   data.classes = gatherClassesToDocument(data, options);
 
