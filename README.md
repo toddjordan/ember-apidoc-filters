@@ -1,2 +1,2 @@
-# ember-yuidoc-filters
-A YUIDoc preprocessor for filter out documentation based on accessor
+# yuidoc-filters
+A YUIDoc preprocessor for filtering out parts of documentation

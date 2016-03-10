@@ -8,8 +8,8 @@ function isDeprecatedClass(item) {
 };
 
 function isClassToBeIncluded(item, options) {
-  if (options["ember-yuidoc-exclude"]) {
-    var accessors = options['ember-yuidoc-exclude'];
+  if (options["yuidoc-exclude"]) {
+    var accessors = options['yuidoc-exclude'];
     for (var i = 0; i < accessors.length; i++) {
       if ((accessors[i] === 'private' && isPrivateClass(item)) ||
           (accessors[i] === 'deprecated' && isDeprecatedClass(item))) {
@@ -29,11 +29,7 @@ function contains(array, item) {
   return false;
 };
 
-module.exports = function (data, options) {
-  if (options["ember-yuidoc-exclude"]) {
-    console.log("Excluding classes with accessors: "+ options["ember-yuidoc-exclude"]);
-  }
-
+function gatherClassesToDocument(data, options) {
   var classesToDocument = {};
 
   for (var c in data.classes) {
@@ -41,13 +37,10 @@ module.exports = function (data, options) {
       classesToDocument[c] = data.classes[c];
     }
   }
+  return classesToDocument;
+};
 
-  var classNamesToDocument = [];
-
-  for (var n in classesToDocument) {
-    classNamesToDocument.push(n);
-  }
-
+function updateClassReferencesInNamespaces(data, classNamesToDocument) {
   for (var namespace in data.modules) {
     var namespaceClasses = {};
     var originalClasses = data.modules[namespace].classes;
@@ -59,5 +52,19 @@ module.exports = function (data, options) {
     data.modules[namespace].classes = namespaceClasses;
   }
 
-  data.classes = classesToDocument;
+};
+
+module.exports = function (data, options) {
+  if (!options["yuidoc-exclude"]) {
+    return;
+  }
+
+  console.log("Excluding classes with accessors: "+ options["yuidoc-exclude"]);
+
+  data.classes = gatherClassesToDocument(data, options);
+
+  var classNamesToDocument = Object.keys(data.classes);
+
+  updateClassReferencesInNamespaces(data, classNamesToDocument);
+
 }
