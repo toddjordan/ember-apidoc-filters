@@ -40,12 +40,12 @@ function gatherClassesToDocument(data, options) {
   return classesToDocument;
 };
 
-function updateClassReferencesInNamespaces(data, classNamesToDocument) {
+function updateClassReferencesInNamespaces(data) {
   for (var namespace in data.modules) {
     var namespaceClasses = {};
     var originalClasses = data.modules[namespace].classes;
     for(var className in originalClasses) {
-      if (contains(classNamesToDocument, className)) {
+      if (contains(Object.keys(data.classes), className)) {
         namespaceClasses[className] = 1;
       }
     }
@@ -56,14 +56,13 @@ function updateClassReferencesInNamespaces(data, classNamesToDocument) {
 
 module.exports = function (data, options) {
   if (!options["yuidoc-exclude"]) {
+    console.log('no yuidoc-exclude specified in yuidoc.json.  Skipping filters.')
     return;
   }
 
-  console.log("Excluding classes with accessors: "+ options["yuidoc-exclude"]);
+  console.log("Excluding yuidoc for classes with: " + options["yuidoc-exclude"]);
 
   data.classes = gatherClassesToDocument(data, options);
-
-  var classNamesToDocument = Object.keys(data.classes);
 
   updateClassReferencesInNamespaces(data, classNamesToDocument);
 
