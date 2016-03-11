@@ -1,10 +1,10 @@
 
 function isPrivateClass(item) {
-  return item.hasOwnProperty('access') && item.access === 'private';
+  return item.access === 'private';
 };
 
 function isDeprecatedClass(item) {
-  return item.hasOwnProperty('deprecated') && item.deprecated === true;
+  return item.deprecated === true;
 };
 
 function isClassToBeIncluded(item, options) {
@@ -45,8 +45,8 @@ function updateClassReferencesInNamespaces(data) {
     var namespaceClasses = {};
     var originalClasses = data.modules[namespace].classes;
     for(var className in originalClasses) {
-      if (contains(Object.keys(data.classes), className)) {
-        namespaceClasses[className] = 1;
+      if (data.classes.hasOwnProperty(className)) {
+        namespaceClasses[className] = originalClasses[className]
       }
     }
     data.modules[namespace].classes = namespaceClasses;

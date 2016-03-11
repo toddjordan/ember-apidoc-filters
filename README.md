@@ -15,5 +15,5 @@ To use on an existing yuidoc project, add the following entries to your `yuidoc.
 }
 ```
 
-Currently yuidoc filters only filters classes marked private or deprecated.
+`yuidoc-filters-exclude` takes an array of exclusion types. Currently yuidoc filters only filters classes marked private or deprecated.
 
