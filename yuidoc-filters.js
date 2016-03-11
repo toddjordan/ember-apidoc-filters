@@ -20,15 +20,6 @@ function isClassToBeIncluded(item, options) {
   return true;
 };
 
-function contains(array, item) {
-  for(var i = 0; i < array.length; i++) {
-    if (array[i] === item) {
-      return true;
-    }
-  }
-  return false;
-};
-
 function gatherClassesToDocument(data, options) {
   var classesToDocument = {};
 
