@@ -1,3 +1,5 @@
+var EXCLUDE_CATEGORY = 'yuidoc-filters-exclude-category';
+var EXCLUDE = 'yuidoc-filters-exclude';
 
 function isPrivateClass(item) {
   return item.access === 'private';
@@ -8,12 +10,23 @@ function isDeprecatedClass(item) {
 };
 
 function isClassToBeIncluded(item, options) {
-  if (options["yuidoc-filters-exclude"]) {
-    var accessors = options['yuidoc-filters-exclude'];
+  if (options[EXCLUDE]) {
+    var accessors = options[EXCLUDE];
     for (var i = 0; i < accessors.length; i++) {
       if ((accessors[i] === 'private' && isPrivateClass(item)) ||
           (accessors[i] === 'deprecated' && isDeprecatedClass(item))) {
         return false;
+      }
+    }
+  }
+
+  if (options[EXCLUDE_CATEGORY] && item.category) {
+    var categories = options[EXCLUDE_CATEGORY];
+    for (var j = 0; j < categories.length; j++) {
+      for (var k = 0; k < item.category.length; k++) {
+        if (categories[j] === item.category[k]) {
+          return false;
+        }
       }
     }
   }
@@ -46,15 +59,18 @@ function updateClassReferencesInNamespaces(data) {
 };
 
 module.exports = function (data, options) {
-  if (!options["yuidoc-filters-exclude"]) {
-    console.log('no yuidoc-filters-exclude specified in yuidoc.json.  Skipping filters.')
+  if (options[EXCLUDE]) {
+    console.log("yuidoc-filters: Excluding yuidoc for classes with: " + options[EXCLUDE]);
+  }
+  if (options[EXCLUDE_CATEGORY]) {
+    console.log("yuidoc-filters: Excluding yuidoc for classes with categories " + options[EXCLUDE_CATEGORY]);
+  }
+  if (!options[EXCLUDE] && !options[EXCLUDE_CATEGORY]) {
+    console.log('yuidoc-filters: no yuidoc-filters-exclude and yuidoc-filters-exclude-category specified in yuidoc.json.  Skipping filters.')
     return;
   }
 
-  console.log("Excluding yuidoc for classes with: " + options["yuidoc-filters-exclude"]);
-
   data.classes = gatherClassesToDocument(data, options);
-
   updateClassReferencesInNamespaces(data);
 
 }
